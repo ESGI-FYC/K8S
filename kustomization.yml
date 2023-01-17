@@ -1,0 +1,7 @@
+resources:
+    - backend/00_postgres.yml
+    - backend/01_configmap.yml
+    - backend/02_deployment.yml
+    - frontend/01_deployment.yml
+    - ingress/01_ingress.yml
+    

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-config
+data:
+  jwt-secret: BvPHGM8C0ia4uOuxxqPD5DTbWC9F9TWvPStp3pb7ARo0oK2mJ3pd3YG4lxA9i8bj6OTbadwezxgeEByY
+  bdd-url: backend-postgres/ecommerce
+  bdd-username: admin
+  bdd-password: admin
+  mail-hostname: smtp.gmail.com
+  mail-username: annual.projects.4th@gmail.com
+  mai-password: tegmijvuymnctfwi
+  mail-port: 465
+  recaptcha-secret: 6Lc5cLkZAAAAANUjd4--Jx6PioSC_N-9MFKT3PsA

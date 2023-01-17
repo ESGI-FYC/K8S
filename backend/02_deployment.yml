@@ -1,0 +1,91 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-service-deployment
+spec:
+  selector:
+    matchLabels:
+      app: backend-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: backend-service
+    spec:
+      containers:
+        - name: backend-service
+          image: 264441729266.dkr.ecr.eu-west-1.amazonaws.com/backend:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          env:
+            - name: JWT_SECRET
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-config
+                  key: jwt-secret
+            - name: BDD_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: bdd-url
+                  name: backend-config
+            - name: BDD_USERNAME
+              valueFrom:
+               configMapKeyRef:
+                 key: bdd-username
+                 name: backend-config
+            - name: BDD_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  key: bdd-password
+                  name: backend-config
+            - name: MAIL_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: mail-hostname
+                  name: backend-config
+            - name: MAIL_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  key: mail-username
+                  name: backend-config
+            - name: MAIL_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  key: mai-password
+                  name: backend-config
+            - name: MAIL_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: mail-port
+                  name: backend-config
+            - name: RECAPTCHA_SECRET
+              valueFrom:
+                configMapKeyRef:
+                  key: recaptcha-secret
+                  name: backend-config
+            - name: PORT
+              value: "8080"
+            - name: HOSTNAME
+              value: "fyc-esgi.fr/backend"
+            - name: VERSIONING_DIR_PATH
+              value: /var/lib/versioning
+          volumeMounts:
+            - name: versioning-repository-storage
+              mountPath: /var/lib/versioning
+      imagePullSecrets:
+        - name: secret-registry
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+spec:
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 8080
+  selector:
+    app: backend-service
