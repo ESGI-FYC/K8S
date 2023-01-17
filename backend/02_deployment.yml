@@ -19,6 +19,11 @@ spec:
           ports:
             - containerPort: 8080
               protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+            requests:
+              cpu: 200m
           env:
             - name: JWT_SECRET
               valueFrom:
@@ -76,6 +81,7 @@ spec:
               mountPath: /var/lib/versioning
       imagePullSecrets:
         - name: secret-registry
+
 
 ---
 apiVersion: v1

@@ -1,0 +1,13 @@
+apiVersion: HTTPScaledObject
+kind: http.keda.sh/v1alpha1
+metadata:
+  name: frontend-service
+spec:
+  scaleTargetRef:
+    deployment: frontend-service
+    service: frontend-service
+    port: 80
+  minReplicas: 1
+  maxReplicas: 3
+  targetPendingRequests: 100
+  host: "fyc-esgi.fr"
